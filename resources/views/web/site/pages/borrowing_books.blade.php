@@ -1,6 +1,6 @@
 @extends('web.site.app')
 
-@section('title', 'Home')
+@section('title', 'My Borrowing Books')
 
 @push('style')
 <link href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -17,10 +17,9 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>Image</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Availability</th>
-                    <th>Borrowing</th>
+                    <th>Borrow_date</th>
+                    <th>Due_date</th>
+                    {{-- <th>Borrowing</th> --}}
                 </tr>
             </thead>
         </table>
@@ -37,16 +36,15 @@
             $('#books-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('site.books.data') }}',
+                ajax: '{{ route('site.books.borrowed') }}',
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'title', name: 'title' },
                     { data: 'author', name: 'author' },
                     { data: 'image', name: 'image' },
-                    { data: 'description', name: 'description' },
-                    { data: 'category', name: 'category' },
-                    { data: 'availability', name: 'availability' },
-                    { data: 'borrowing', name: 'borrowing' },
+                    { data: 'borrow_date', name: 'borrow_date' },
+                    { data: 'due_date', name: 'due_date' },
+                    // { data: 'borrowing', name: 'borrowing' },
                 ]
             });
         });

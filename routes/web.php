@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Site\BookController;
+use App\Http\Controllers\Site\BorrowBookController;
+use App\Http\Controllers\Site\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::as('site.')->group(function () {
+    Route::middleware('auth')->group(function () {
+
+        Route::get('books/{book_id}/borrowing', [BookController::class, 'borrowing'])->name('books.borrowing');
+        Route::controller(BorrowBookController::class)->group(function(){
+            Route::get('books/borrowed', 'borrowedBooks')->name('books.borrowed');
+            Route::get('books/borrowed/index', 'index')->name('books.index');
+        });
+    });
+
+
+    Route::get('/', HomeController::class)->name('home');
+    Route::get('/books-data', [BookController::class, 'getBooksData'])->name('books.data');
 });
 
-Route::get('/dashboard', function () {
-    return view('web.site.pages.home');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,4 +39,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
