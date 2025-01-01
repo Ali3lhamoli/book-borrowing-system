@@ -9,6 +9,7 @@
 
 @section('content')
     <div class="container my-5">
+        @include('web.inc.success')
         <h1 class="text-center mb-4">Books List</h1>
         <table id="books-table" class="table table-bordered table-striped">
             <thead>
@@ -21,6 +22,7 @@
                     <th>Category</th>
                     <th>Availability</th>
                     <th>Borrowing</th>
+                    <th>Admin</th>
                 </tr>
             </thead>
         </table>
@@ -47,6 +49,7 @@
                     { data: 'category', name: 'category' },
                     { data: 'availability', name: 'availability' },
                     { data: 'borrowing', name: 'borrowing' },
+                    { data: 'admin', name: 'admin'  } // العمود الجديد
                 ]
             });
         });

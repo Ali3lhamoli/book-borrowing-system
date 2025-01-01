@@ -14,10 +14,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('site.books.index') }}">My Books</a>
                 </li>
-                
+
+                @if (auth()->check() && auth()->user()->hasRole('admin'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('site.books.create') }}">Add Books</a>
+                    </li>
+                @endif
+
                 @if (!auth()->check())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Register</a>
                     </li>
                 @else
                     <li class="nav-item dropdown">
@@ -32,7 +41,8 @@
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button class="dropdown-item" type="submit" class="nav-link text-white">logout</button>
+                                    <button class="dropdown-item" type="submit"
+                                        class="nav-link text-white">logout</button>
                                 </form>
                             </li>
                         </ul>
